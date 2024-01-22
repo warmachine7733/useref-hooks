@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 export default function HookTimer() {
   const timerRef = useRef();
@@ -6,11 +7,18 @@ export default function HookTimer() {
   const [buttonVal, setButtonVal] = useState("stop");
 
   useEffect(() => {
+    getUser();
     startTimer();
     return () => {
       handleTimer();
     };
   }, []);
+  const getUser = async () => {
+    const result = await axios.get("http://localhost:9000/getBlogsFromDb");
+    // console.log("..", await result.json());
+    console.log("..", result);
+
+  };
   const startTimer = () => {
     setButtonVal("stop");
     timerRef.current = setInterval(() => {
